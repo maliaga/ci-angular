@@ -70,6 +70,21 @@ unit-tests:
           path: ./coverage
       - store_test_results:
           path: ./test-results
+  e2e:
+    docker:
+      - image: cypress/base:10
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # - <<: *restore_npm_cache
+      - <<: *install_node_modules
+      # - <<: *save_npm_cache
+      - run:
+          name: Running e2e tests
+          command: bash ./ci/e2e
 workflows:
   version: 2
   angular-chile-pipeline:
