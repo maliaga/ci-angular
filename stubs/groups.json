@@ -1,0 +1,7 @@
+{
+    "list": [
+        { "id": "G1", "value": "Grupo 1", "active": true },
+        { "id": "G2", "value": "Grupo 2", "active": true },
+        { "id": "GA", "value": "Aprobador", "active": true }
+    ]
+}
