@@ -76,6 +76,20 @@ jobs:
       - run:
           name: e2e tests
           command: ./ci/e2e
+  build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - <<: *show_bash_version
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *save_cache
+      - run:
+          name: Build app
+          command: ./ci/build
+      - <<: *store_dist
 workflows:
   version: 2
   angular-chile-pipeline:
@@ -83,3 +97,8 @@ workflows:
       - linter
       - unit-tests
       - e2e
+      - build:
+          requires:
+            - linter
+            - unit-tests
+            - e2e
