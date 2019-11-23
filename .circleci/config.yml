@@ -67,21 +67,21 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - <<: *restore_npm_cache
+      # - <<: *restore_npm_cache
       - <<: *install_node_modules
-      - <<: *save_npm_cache
+      # - <<: *save_npm_cache
       - run:
           name: Linting
-          command: npm run lint
+          command: ./ci/linter
   unit-tests:
     docker:
       - image: circleci/node:10
     working_directory: ~/repo
     steps:
       - checkout
-      - <<: *restore_npm_cache
+      # - <<: *restore_npm_cache
       - <<: *install_node_modules
-      - <<: *save_npm_cache
+      # - <<: *save_npm_cache
       - run:
           name: Running unit tests
           command: ./ci/unit-tests
@@ -102,9 +102,9 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - <<: *restore_npm_cache
+      # - <<: *restore_npm_cache
       - <<: *install_node_modules
-      - <<: *save_npm_cache
+      # - <<: *save_npm_cache
       - run:
           name: Running e2e tests
           command: bash ./ci/e2e
@@ -116,9 +116,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./workspace_variables
-      - <<: *restore_npm_cache
+      # - <<: *restore_npm_cache
       - <<: *install_node_modules
-      - <<: *save_npm_cache
+      # - <<: *save_npm_cache
       - run:
           name: Building artifact using ng build
           command: ./ci/build
@@ -138,16 +138,12 @@ jobs:
           name: Deploy to Heroku
           command: ./ci/release
   smoke-test-staging:
-    docker:
-      - image: circleci/node:10
+    machine: true
     working_directory: ~/repo
     steps:
       - checkout
       - attach_workspace:
           at: ./workspace_variables
-      - <<: *restore_npm_cache
-      - <<: *install_node_modules
-      - <<: *save_npm_cache
       - run:
           name: Running Smoke test
           command: ./ci/smoke-test
@@ -176,9 +172,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./workspace_variables
-      - <<: *restore_npm_cache
+      # - <<: *restore_npm_cache
       - <<: *install_node_modules
-      - <<: *save_npm_cache
+      # - <<: *save_npm_cache
       - <<: *set_git_credentials
       - run:
           name: Updating repository
